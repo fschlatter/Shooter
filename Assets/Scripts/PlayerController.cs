@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
 	{
 		for(int i = 0; i < extraMags; i++)
 		{
-			GameObject extraMag = Instantiate(extraMagPrefab, new Vector3(1450-40*i, 66, 0), Quaternion.identity, uiCanvas.transform);
+			GameObject extraMag = Instantiate(extraMagPrefab, new Vector3(1700-40*i, 66, 0), Quaternion.identity, uiCanvas.transform);
 			extraMagGO[i] = extraMag;
 			Debug.Log(i + " " + extraMagGO[i].name);
 		}
