@@ -14,7 +14,12 @@ public class Bullet : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (lifeTime > 0)
+       lifeTimeCheck();
+    }
+	// Check if the bullet has been alive for too long
+	private void lifeTimeCheck()
+	{
+		if (lifeTime > 0)
 		{
 			lifeTime -= Time.deltaTime;
 		}
@@ -22,5 +27,19 @@ public class Bullet : MonoBehaviour
 		{
 			Destroy(gameObject);
 		}
-    }
+	}
+	// Destroy the bullet when it collides with something
+	private void OnTriggerEnter(Collider collision)
+	{
+		switch (collision.gameObject.tag)
+		{
+			case "Enemy":
+				collision.gameObject.GetComponent<Enemy>().death();
+				Destroy(gameObject);
+				break;
+			case "Wall":
+				Destroy(gameObject);
+				break;
+		}	
+	}
 }

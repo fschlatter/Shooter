@@ -15,13 +15,13 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject extraMagPrefab;
 	[SerializeField] private GameObject uiCanvas;
 	[SerializeField] private float recoilForce;
-	[SerializeField] private GameObject[] extraMags;
+	[SerializeField] private GameObject[] extraMagGO;
 	private int ammo = 6;
-	private int mags = 5;
+	private int extraMags = 30;
 	// Start is called before the first frame update
 	void Start()
 	{
-		extraMags = new GameObject[mags];
+		extraMagGO = new GameObject[extraMags];
 		ammoManagement();
 		instantiateMags();
 	}
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
 		{
 			resolveFiring();
 		}
-		if (Input.GetButtonDown("Fire2") && mags > 0 && ammo < 3)
+		if (Input.GetButtonDown("Fire2") && extraMags > 0 && ammo < 3)
 		{
 			reload();
 		}
@@ -99,8 +99,8 @@ public class PlayerController : MonoBehaviour
 	private void reload()
 	{
 		ammo = 6;
-		mags--;
-		Destroy(extraMags[mags]);
+		extraMags--;
+		Destroy(extraMagGO[extraMags]);
 		ammoManagement();
 	}
 	private void hideAllClips()
@@ -112,10 +112,11 @@ public class PlayerController : MonoBehaviour
 	}
 	private void instantiateMags()
 	{
-		for(int i = 0; i < mags; i++)
+		for(int i = 0; i < extraMags; i++)
 		{
 			GameObject extraMag = Instantiate(extraMagPrefab, new Vector3(1450-40*i, 66, 0), Quaternion.identity, uiCanvas.transform);
-			extraMags[i] = extraMag;
+			extraMagGO[i] = extraMag;
+			Debug.Log(i + " " + extraMagGO[i].name);
 		}
 	}
 }
