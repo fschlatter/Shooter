@@ -16,14 +16,19 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject uiCanvas;
 	[SerializeField] private float recoilForce;
 	[SerializeField] private GameObject[] extraMagGO;
+	[SerializeField] private GameObject player;
 	private int ammo = 6;
-	private int extraMags = 30;
+	private int extraMags;
+	public void setMagAmount(int mags)
+	{
+		extraMags = mags;
+		extraMagGO = new GameObject[extraMags];
+		instantiateMags();
+	}
 	// Start is called before the first frame update
 	void Start()
 	{
-		extraMagGO = new GameObject[extraMags];
 		ammoManagement();
-		instantiateMags();
 	}
 
 	// Update is called once per frame
@@ -57,10 +62,6 @@ public class PlayerController : MonoBehaviour
 		{
 			brake();
 		}
-		else
-		{
-			gameObject.GetComponent<Rigidbody>().drag = 1;
-		}
 	}
 	// Remove velocity when low
 	private void removeVelocity()
@@ -69,10 +70,32 @@ public class PlayerController : MonoBehaviour
 		float minVelocity = 0.3f;
 		if ((velocity.x < minVelocity && velocity.y < minVelocity && velocity.z < minVelocity) && (velocity.x > -minVelocity && velocity.y > -minVelocity && velocity.z > -minVelocity))
 		{
-			gameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
+			GetComponent<Rigidbody>().velocity = Vector3.zero;
 		}
 	}
-	
+	// Checks if the ground is ice or stone using the groundCheck collider
+	private void OnTriggerStay(Collider other)
+	{
+		switch (other.tag)
+		{
+			case "Escape":
+				// endGame;
+				Debug.Log("Game Win");
+				break;
+			case "FloorIce":
+				Debug.Log("Ice");
+				GetComponent<Rigidbody>().drag = 0.5f;
+				break;
+			case "FloorStone":
+				Debug.Log("Stone");
+				GetComponent<Rigidbody>().drag = 1.5f;
+				break;
+			default:
+				GetComponent<Rigidbody>().drag = 1f;
+				break;
+		}
+		
+	}
 	// Resolves the firing of the gun by the player
 	private void resolveFiring()
 	{

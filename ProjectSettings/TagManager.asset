@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 2
   tags:
   - Enemy
+  - Wall
+  - FloorIce
+  - FloorStone
+  - Escape
   layers:
   - Default
   - TransparentFX
