@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class ScoreManager1 : MonoBehaviour
+public class ScoreManager2 : MonoBehaviour
 {
 	private GameObject player;
 	private GameObject[] enemies;

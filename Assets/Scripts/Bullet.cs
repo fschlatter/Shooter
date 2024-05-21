@@ -39,7 +39,6 @@ public class Bullet : MonoBehaviour
 				break;
 			case "Wall":
 				Destroy(gameObject);
-				Debug.Log("Wall hit");
 				break;
 		}	
 	}

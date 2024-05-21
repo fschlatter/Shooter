@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Enemy : MonoBehaviour
 {
@@ -29,12 +30,10 @@ public class Enemy : MonoBehaviour
 	{
 		if (other.CompareTag("FloorIce"))
 		{
-			Debug.Log("Ice");
 			GetComponent<Rigidbody>().drag = 0.5f;
 		}
 		else if (other.CompareTag("FloorStone"))
 		{
-			Debug.Log("Stone");
 			GetComponent<Rigidbody>().drag = 1.5f;
 		}
 		else
@@ -46,8 +45,7 @@ public class Enemy : MonoBehaviour
 	{
 		if (collision.gameObject.CompareTag("Player"))
 		{
-			// endGame;
-			Debug.Log("Game Over");
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 		}
 	}
 }

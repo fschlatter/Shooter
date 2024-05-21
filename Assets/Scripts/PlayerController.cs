@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,11 +15,13 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject[] clip;
 	[SerializeField] private GameObject extraMagPrefab;
 	[SerializeField] private GameObject uiCanvas;
-	[SerializeField] private float recoilForce;
+	private float recoilForce = 500f;
 	[SerializeField] private GameObject[] extraMagGO;
 	[SerializeField] private GameObject player;
-	private int ammo = 6;
+	private int ammo;
 	private int extraMags;
+	private static int level = 1;
+	public static int Level { get => level; }
 	public void setMagAmount(int mags)
 	{
 		extraMags = mags;
@@ -28,6 +31,7 @@ public class PlayerController : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
+		ammo = 6;
 		ammoManagement();
 	}
 
@@ -37,6 +41,10 @@ public class PlayerController : MonoBehaviour
 		turnTowardsMouse();
 		inputManager();
 		removeVelocity();
+		if (extraMags <= 0 && ammo <= 0)
+		{
+			StartCoroutine(loss());
+		}
 	}
 	// Sets the rotation of the player towards the mouse position relative to the camera
 	private void turnTowardsMouse()
@@ -79,15 +87,13 @@ public class PlayerController : MonoBehaviour
 		switch (other.tag)
 		{
 			case "Escape":
-				// endGame;
-				Debug.Log("Game Win");
+				level = SceneManager.GetActiveScene().buildIndex + 1;
+				SceneManager.LoadScene(0);
 				break;
 			case "FloorIce":
-				Debug.Log("Ice");
 				GetComponent<Rigidbody>().drag = 0.5f;
 				break;
 			case "FloorStone":
-				Debug.Log("Stone");
 				GetComponent<Rigidbody>().drag = 1.5f;
 				break;
 			default:
@@ -137,9 +143,14 @@ public class PlayerController : MonoBehaviour
 	{
 		for(int i = 0; i < extraMags; i++)
 		{
-			GameObject extraMag = Instantiate(extraMagPrefab, new Vector3(1700-40*i, 66, 0), Quaternion.identity, uiCanvas.transform);
+			GameObject extraMag = Instantiate(extraMagPrefab, new Vector3((1700 * Screen.currentResolution.width / 1920)-40*i, 66, 0), Quaternion.identity, uiCanvas.transform);
 			extraMagGO[i] = extraMag;
-			Debug.Log(i + " " + extraMagGO[i].name);
 		}
+	}
+	// Loss coroutine
+	private IEnumerator loss()
+	{
+		yield return new WaitForSeconds(2);
+		SceneManager.LoadScene(0);
 	}
 }
