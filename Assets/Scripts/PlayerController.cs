@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
 	[SerializeField] private GameObject[] clip;
 	[SerializeField] private GameObject extraMagPrefab;
 	[SerializeField] private GameObject uiCanvas;
-	private float recoilForce = 500f;
+	private readonly float recoilForce = 500f;
 	[SerializeField] private GameObject[] extraMagGO;
 	[SerializeField] private GameObject player;
 	private int ammo;
@@ -25,6 +25,10 @@ public class PlayerController : MonoBehaviour
 	public void setMagAmount(int mags)
 	{
 		extraMags = mags;
+		if (mags == -1)
+		{
+			extraMags = 100;
+		}
 		extraMagGO = new GameObject[extraMags];
 		instantiateMags();
 	}

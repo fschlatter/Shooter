@@ -10,6 +10,7 @@ public class ScoreManager4 : MonoBehaviour
 	[SerializeField] private int mags;
 	[SerializeField] private GameObject escapeWall;
 	[SerializeField] private GameObject text;
+	[SerializeField] private GameObject wall;
 	// Start is called before the first frame update
 	void Start()
     {
@@ -21,15 +22,17 @@ public class ScoreManager4 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-		if (enemies.Length == 0)
+		switch(enemies.Length)
 		{
-			escapeWall.SetActive(false);
-			text.SetActive(true);
+			case 0:
+				escapeWall.SetActive(false);
+				text.SetActive(true);
+				break;
+			case 16:
+				wall.SetActive(false);
+				break;
 		}
-		else
-		{
-			enemies = GameObject.FindGameObjectsWithTag("Enemy");
-		}
+		enemies = GameObject.FindGameObjectsWithTag("Enemy");
 	}
 	public void back()
 	{
