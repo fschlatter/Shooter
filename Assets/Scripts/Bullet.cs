@@ -34,7 +34,14 @@ public class Bullet : MonoBehaviour
 		switch (collision.gameObject.tag)
 		{
 			case "Enemy":
-				collision.gameObject.GetComponent<Enemy>().death();
+				try
+				{
+					collision.gameObject.GetComponent<Enemy>().death();
+				}
+				catch
+				{
+					collision.gameObject.GetComponent<Boss>().hit(1f);
+				}
 				Destroy(gameObject);
 				break;
 			case "Wall":

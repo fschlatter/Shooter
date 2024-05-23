@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButtonDown("Fire1") && ammo > 0)
 		{
 			resolveFiring();
+			Cursor.lockState = CursorLockMode.Confined;
 		}
 		if (Input.GetButtonDown("Fire2") && extraMags > 0 && ammo < 3)
 		{
@@ -73,6 +74,10 @@ public class PlayerController : MonoBehaviour
 		if (Input.GetButton("Jump"))
 		{
 			brake();
+		}
+		if (Input.GetKeyDown(KeyCode.Escape))
+		{
+			Cursor.lockState = CursorLockMode.None;
 		}
 	}
 	// Remove velocity when low
@@ -156,5 +161,13 @@ public class PlayerController : MonoBehaviour
 	{
 		yield return new WaitForSeconds(2);
 		SceneManager.LoadScene(0);
+	}
+	// Check for particle collision
+	private void OnParticleCollision(GameObject other)
+	{
+		if (other.CompareTag("Explosion"))
+		{
+			SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		}
 	}
 }
