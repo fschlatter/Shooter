@@ -9981,8 +9981,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ScoreManager1, Assembly-CSharp
+      - m_Target: {fileID: 767738158}
+        m_TargetAssemblyTypeName: ScoreManager2, Assembly-CSharp
         m_MethodName: back
         m_Mode: 1
         m_Arguments:

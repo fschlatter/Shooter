@@ -5,14 +5,7 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 	[SerializeField] private Transform player;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    // FixedUpdate is called once per frame
     void Update()
     {
         transform.position = new Vector3(player.position.x, player.position.y + 50, player.position.z);

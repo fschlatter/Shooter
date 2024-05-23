@@ -15,15 +15,15 @@ public class Boss : MonoBehaviour
 	private float explosiveAmount;
 	[SerializeField] private GameObject bombPrefab;
 	[SerializeField] private float bRange;
-	// Start is called before the first frame update
+	// Start is called before the first frame FixedUpdate
 	void Start()
     {
 		cooldown = Random.Range(cooldownRangeMin, cooldownRangeMax);
 		player = GameObject.Find("Player");
 	}
 
-    // Update is called once per frame
-    void Update()
+    // FixedUpdate is called once per frame
+    void FixedUpdate()
     {
 		if (cooldown <= 0) 
 		{
@@ -47,11 +47,9 @@ public class Boss : MonoBehaviour
 	{
 		if (HP > 0)
 		{
-			HP--;
+			HP-=multiplier;
 			healthBar.transform.localPosition = new Vector3(HP*5, healthBar.transform.localPosition.y, healthBar.transform.localPosition.z);
 			healthBar.transform.localScale = new Vector3(HP/100, healthBar.transform.localScale.y, healthBar.transform.localScale.z);
-			Debug.Log("HP: " + HP*5 );
-			Debug.Log("Scale: " + HP / 100);
 		}
 		else
 		{

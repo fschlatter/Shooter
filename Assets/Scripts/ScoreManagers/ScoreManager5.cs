@@ -28,7 +28,6 @@ public class ScoreManager5 : MonoBehaviour
 		}
 		else
 		{
-			Debug.Log(enemies.Length);
 			enemies = GameObject.FindGameObjectsWithTag("Enemy");
 		}
 	}

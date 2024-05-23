@@ -8,18 +8,19 @@ public class Enemy : MonoBehaviour
 	[SerializeField] private GameObject deathParticles;
 	private GameObject player;
 	private Rigidbody rb;
-	private readonly float forceMultiplier = 0.3f;
-    // Start is called before the first frame update
+	private readonly float forceMultiplier = 25f;
+    // Start is called before the first frame FixedUpdate
     void Start()
     {
 		player = GameObject.Find("Player");
         rb = gameObject.GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
-    void Update()
+    // FixedUpdate is called once per frame
+    void FixedUpdate()
     {
-		rb.AddForce((player.transform.position - transform.position)* forceMultiplier);
+		transform.rotation = Quaternion.LookRotation(player.transform.position - transform.position);
+		rb.AddRelativeForce(Vector3.forward * forceMultiplier);
     }
 	public void death()
 	{
